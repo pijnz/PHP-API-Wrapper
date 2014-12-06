@@ -149,7 +149,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad972790f096dfcfeb8ba065cba77d863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#ad972790f096dfcfeb8ba065cba77d863">getLocationItem</a> ($itemId, $accountid)</td></tr>
 <tr class="memitem:accc113496da179e563ff74c8cf1c5bb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#accc113496da179e563ff74c8cf1c5bb5">updateLocationItem</a> ($locationsetitem, $accountid='')</td></tr>
 <tr class="memitem:aa5e4196f1329a96c3c85ba9ba01e57d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#aa5e4196f1329a96c3c85ba9ba01e57d8">deleteLocationItem</a> ($itemId, $accountid='')</td></tr>
-<tr class="memitem:a4595d2e9a5682c755d010b2f8400039a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#a4595d2e9a5682c755d010b2f8400039a">__construct</a> ($key, $useStageServer=false, &amp;$customLoadTokenCallback=null, &amp;$customSaveTokenCallback=null)</td></tr>
+<tr class="memitem:a4595d2e9a5682c755d010b2f8400039a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#a4595d2e9a5682c755d010b2f8400039a">__construct</a> ($key, &amp;$customLoadTokenCallback=null, &amp;$customSaveTokenCallback=null)</td></tr>
 <tr class="memitem:a5d251c70a3f9f9daaff7f00ec5f894c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#a5d251c70a3f9f9daaff7f00ec5f894c0">getAccessToken</a> ()</td></tr>
 <tr class="memitem:ae14e52619323d2947c39524c38213a8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#ae14e52619323d2947c39524c38213a8d">setAccessToken</a> ($newToken)</td></tr>
 <tr class="memitem:ac2539d0fcd2e9858f1b35faf843acb69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_api_v2.html#ac2539d0fcd2e9858f1b35faf843acb69">Authentication</a> ()</td></tr>
@@ -192,12 +192,6 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$useStageServer</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">&amp;&#160;</td>
           <td class="paramname"><em>$customLoadTokenCallback</em> = <code>null</code>, </td>
         </tr>
@@ -216,11 +210,10 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Class constructor</p>
 <p>Required arguments: key - API Key</p>
-<p>Optional parameters: useStageServer - if true, will use API url for Stage server customLoadTokenCallback - function to get previously saved temporary access token customSaveTokenCallback - function to save temporary access token</p>
+<p>Optional parameters:  customLoadTokenCallback - function to get previously saved temporary access token customSaveTokenCallback - function to save temporary access token</p>
 <dl class="params"><dt>Parameters:</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$key</td><td></td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$useStageServer</td><td></td></tr>
     <tr><td class="paramtype">void</td><td class="paramname">$customLoadTokenCallback</td><td></td></tr>
     <tr><td class="paramtype">void</td><td class="paramname">$customSaveTokenCallback</td><td></td></tr>
   </table>

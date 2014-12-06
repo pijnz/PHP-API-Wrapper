@@ -9,7 +9,6 @@ class ApiV2 {
 	
 	protected $apiKey = '';
 	protected $apiURL = 'https://files.safemobi.net/rest/v2/'; 
-	//protected $apiURL = 'https://files.flattrees.com/rest/v2';
 	protected $accessToken = '';
 	protected $saveTokenCallback;
 	protected $loadTokenCallback;
@@ -932,24 +931,19 @@ class ApiV2 {
 	 * key -  API Key
 	 *
 	 * Optional parameters:
-	 *  useStageServer - if true, will use API url for Stage server 
 	 *  customLoadTokenCallback - function to get previously saved temporary access token
 	 *  customSaveTokenCallback - function to save temporary access token
 	 *
 	 * @param string $key
-	 * @param boolean $useStageServer
 	 * @param void $customLoadTokenCallback
 	 * @param void $customSaveTokenCallback
 	 */
-	function __construct($key, $useStageServer = false, &$customLoadTokenCallback = null, &$customSaveTokenCallback = null) {
+	function __construct($key, &$customLoadTokenCallback = null, &$customSaveTokenCallback = null) {
 		if (strlen($key)>0)	{
 			$this->apiKey = $key;
 		}
-		if ($useStageServer) {
-			$this->apiURL = 'https://files.flattrees.com/rest/v2';
-		}
 		//filename to store temporary access token
-		$this->tmpTokenFilename = sys_get_temp_dir().'/resapi'.($useStageServer ? '-debug' : '').'.txt';
+		$this->tmpTokenFilename = sys_get_temp_dir().'/resapi.txt';
 		
 		//set access token load/save callbacks
 		$this->loadTokenCallback = ( (isset($customLoadTokenCallback) && is_callable($customLoadTokenCallback)) ? $customLoadTokenCallback : array(&$this, 'loadTokenFromFile') );
