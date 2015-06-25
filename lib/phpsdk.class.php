@@ -8,7 +8,7 @@
 class ApiV2 {
 	
 	protected $apiKey = '';
-	protected $apiURL = 'https://files.safemobi.net/rest/v2/'; 
+	protected $apiURL = 'https://files.safemobi.net/rest/v2'; 
 	protected $accessToken = '';
 	protected $saveTokenCallback;
 	protected $loadTokenCallback;
@@ -30,8 +30,8 @@ class ApiV2 {
 	 * @param string $accountid
 	 * return apiResponse object
 	 */
-	public function getAccountPlans($accounttype='Basic', $accountid='') {
-		if ($accountid) {
+	public function getAccountPlans($accounttype='Basic', $accountID='') {
+		if ($accountID) {
 			$res = $this->ApiRequest('/accountplans/'.$accountID.'?accounttype='.$accounttype);
 		} else {
 			 $res = $this->ApiRequest('/accountplans/?accounttype='.$accounttype);
@@ -64,8 +64,8 @@ class ApiV2 {
 	 * @param string $accountid
 	 * @return apiResponse object
 	 */
-	public function addLoyaltyMember($member, $accountid='') {
-		$res = $this->ApiRequest('/loyaltyprogram/members/'.$accountid, 'PUT', new ApiLPMember($member));
+	public function addLoyaltyMember($member, $accountID='') {
+		$res = $this->ApiRequest('/loyaltyprogram/members/'.$accountID, 'PUT', new ApiLPMember($member));
 		if ($res->Success) $res->Data = recast('ApiLPMember', $res->Data);
 		return $res;
 	}
@@ -76,16 +76,16 @@ class ApiV2 {
 	 * Update a loyalty program member
 	 * 
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * $member    - Loyalty program member
 	 * 				Array of values, or ApiLPMember object, or stdClass object can be used
 	 * 
 	 * @param $member
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function updateLoyaltyMember($member, $accountid='') {
-		$res =  $this->ApiRequest('/loyaltyprogram/members/'.$accountid, 'POST', new ApiLPMember($member));
+	public function updateLoyaltyMember($member, $accountID='') {
+		$res =  $this->ApiRequest('/loyaltyprogram/members/'.$accountID, 'POST', new ApiLPMember($member));
 		if ($res->Success) $res->Data = recast('ApiLPMember', $res->Data);
 		return $res;
 	}
@@ -96,15 +96,15 @@ class ApiV2 {
 	 * Returns a member object containing the member information
 	 * 
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * $memberid - Member id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param string $memberid
 	 * @return apiResponse object
 	 */
-	public function getLoyaltyMember($accountid, $memberid) {
-		$res = $this->ApiRequest('/loyaltyprogram/members/'.$accountid.'/'.$memberid);
+	public function getLoyaltyMember($accountID, $memberid) {
+		$res = $this->ApiRequest('/loyaltyprogram/members/'.$accountID.'/'.$memberid);
 		if ($res->Success) $res->Data = recast('ApiLPMember', $res->Data);
 		return $res;
 	}
@@ -115,19 +115,19 @@ class ApiV2 {
 	 * Returns a list of members within a loyalty program
 	 * 
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * 
 	 * Optional parameters:
 	 * $skip - Skip record count. Default value is 0
 	 * $take - Take record count. Default value is 500
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param int $skip
 	 * @param int $take
 	 * @return apiResponse object
 	 */
-	public function getLoyaltyMembers($accountid, $skip=0, $take=500){
-		$res =  $this->ApiRequest('/loyaltyprogram/members/'.$accountid.'?skip='.$skip.'&take='.$take);
+	public function getLoyaltyMembers($accountID, $skip=0, $take=500){
+		$res =  $this->ApiRequest('/loyaltyprogram/members/'.$accountID.'?skip='.$skip.'&take='.$take);
 		if ($res->Success) :
 			for ($i=0;$i<count($res->Data->Items);$i++) :
 				$res->Data->Items[$i] = recast('ApiLPMember', $res->Data->Items[$i]);
@@ -143,19 +143,19 @@ class ApiV2 {
 	 * Returns a list of authorized employees within a loyalty program
 	 *
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * 
 	 * Optional parameters:
 	 * $skip - Skip record count. Default value is 0
 	 * $take - Take record count. Default value is 500
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param int $skip
 	 * @param int $take
 	 * @return apiResponse object
 	 */
-	public function getLoyaltyEmployees($accountid, $skip=0, $take=500){
-		$res =  $this->ApiRequest('/loyaltyprogram/employees/'.$accountid.'?skip='.$skip.'&take='.$take);
+	public function getLoyaltyEmployees($accountID, $skip=0, $take=500){
+		$res =  $this->ApiRequest('/loyaltyprogram/employees/'.$accountID.'?skip='.$skip.'&take='.$take);
 		if ($res->Success) :
 			for ($i=0;$i<count($res->Data->Items);$i++) :
 				$res->Data->Items[$i] = recast('ApiLPEmployee', $res->Data->Items[$i]);
@@ -172,12 +172,12 @@ class ApiV2 {
 	 * Returns a list of bonus actions configured for a loyalty program
 	 *
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getLoyaltyBonusActions($accountid){
+	public function getLoyaltyBonusActions($accountID){
 		$res =  $this->ApiRequest('/loyaltyprogram/actions/'.$accountID);
 		if ($res->Success) :
 			for ($i=0;$i<count($res->Data->Items);$i++) :
@@ -193,13 +193,13 @@ class ApiV2 {
 	 * Returns a list of rewards configured for a loyalty program
 	 *
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getLoyaltyRewards($accountid){
-		$res =  $this->ApiRequest('/loyaltyprogram/rewards/'.$accountid);
+	public function getLoyaltyRewards($accountID){
+		$res =  $this->ApiRequest('/loyaltyprogram/rewards/'.$accountID);
 		if ($res->Success) :
 			for ($i=0;$i<count($res->Data->Items);$i++) :
 				$res->Data->Items[$i] = recast('ApiLPRewardInfo', $res->Data->Items[$i]);
@@ -214,19 +214,19 @@ class ApiV2 {
 	 * Enter points for a loyalty program member
 	 * 
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * $transaction - transaction. Can be array, stdClass or ApiLPTransaction object 
 	 * 
 	 * Optional Parameters:
 	 * $isPunch - Default value is False
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param $transaction
 	 * @param bool $isPunch
 	 * @return apiResponse object
 	 */
 	 
-	public function LoyaltyEnterPoints($accountid, $transaction,  $isPunch = false){
+	public function LoyaltyEnterPoints($accountID, $transaction,  $isPunch = false){
 		$res =  $this->ApiRequest('/loyaltyprogram/enterpoints/'.$accountID.'?isPunch='.($isPunch ? 'true' : 'false'), 'POST', new ApiLPTransaction($transaction));
 		if ($res->Success) $res->Data = recast('ApiLPTransaction', $res->Data);
 		return $res;
@@ -238,15 +238,15 @@ class ApiV2 {
 	 * Record a bonus action for a loyalty program member
 	 *
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * $transaction - Action transaction. Can be array, stdClass or ApiLPActionTransaction object
 	 *  
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param $transaction
 	 * @return apiResponse object
 	 */
-	public function LoyaltyEnterAction($accountid, $transaction){
-		$res =  $this->ApiRequest('/loyaltyprogram/enteraction/'.$accountid, 'POST', new ApiLPActionTransaction($transaction));
+	public function LoyaltyEnterAction($accountID, $transaction){
+		$res =  $this->ApiRequest('/loyaltyprogram/enteraction/'.$accountID, 'POST', new ApiLPActionTransaction($transaction));
 		if ($res->Success) $res->Data = recast('ApiLPActionTransaction', $res->Data);
 		return $res;
 	}
@@ -257,15 +257,15 @@ class ApiV2 {
 	 * Record a reward redemption for a loyalty program member
 	 *
 	 * Required parameters:
-	 * $accountid - Your account id
+	 * $accountID - Your account id
 	 * $transaction - Action transaction. Can be array, stdClass or ApiLPActionTransaction object
 	 *  
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param $transaction
 	 * @return apiResponse object
 	 */
-	public function LoyaltyEnterRedemption($accountid, $transaction){
-		$res =  $this->ApiRequest('/loyaltyprogram/enterredemption/'.$accountid, 'POST', new ApiLPRedemptionTransaction($transaction));
+	public function LoyaltyEnterRedemption($accountID, $transaction){
+		$res =  $this->ApiRequest('/loyaltyprogram/enterredemption/'.$accountID, 'POST', new ApiLPRedemptionTransaction($transaction));
 		if ($res->Success) $res->Data = recast('ApiLPRedemptionTransaction', $res->Data);
 		return $res;
 	}
@@ -386,13 +386,13 @@ class ApiV2 {
 	 * Returns the information on the account
 	 * 
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 *
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getAccount($accountid) {
-		$res = $this->ApiRequest('/accounts/'.$accountid);
+	public function getAccount($accountID) {
+		$res = $this->ApiRequest('/accounts/'.$accountID);
 		if ($res->Success)	:
 			$res->Data = recast('Account', $res->Data);
 			if (is_array($res->Data->Sites)) :
@@ -418,13 +418,13 @@ class ApiV2 {
 	 * Creates a temporary login link for authentication to a specific account. The lifetime of this login link is 2 minutes.
 	 *
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getAccessUrl($accountid) {
-		return $this->ApiRequest('/accounts/'.$accountid.'/getaccessurl');
+	public function getAccessUrl($accountID) {
+		return $this->ApiRequest('/accounts/'.$accountID.'/getaccessurl');
 	}
 	
 	/**
@@ -433,15 +433,15 @@ class ApiV2 {
 	 * Changes the external id for an account. An 'external id' is an id of this account in your system.
 	 *
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 * $externalid - External Id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param string $externalid
 	 * @return apiResponse object
 	 */
-	public function changeExterternalId($accountid, $externalid) {
-		return $this->ApiRequest('/accounts/'.$accountid.'/changeexternalid/'.$externalid, 'POST', new stdClass());
+	public function changeExterternalId($accountID, $externalid) {
+		return $this->ApiRequest('/accounts/'.$accountID.'/changeexternalid/'.$externalid, 'POST', new stdClass());
 	}
 	
 	/**
@@ -450,15 +450,15 @@ class ApiV2 {
 	 * Changes the status for the account
 	 *
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 * $status - New status for the account. Possiable status values for the Basic account (sub-account): Active, Disabled. Possiable status values for the Premium account (multi-user account): Active, Suspended, Canceled.
 	 *
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param string $status
 	 * @return apiResponse object
 	 */
-	public function changeAccountStatus($accountid, $status) {
-		return $this->ApiRequest('/accounts/'.$accountid.'/changeaccountstatus/'.$status, 'POST', new stdClass());
+	public function changeAccountStatus($accountID, $status) {
+		return $this->ApiRequest('/accounts/'.$accountID.'/changeaccountstatus/'.$status, 'POST', new stdClass());
 	}
 	
 	/**
@@ -467,15 +467,15 @@ class ApiV2 {
 	 * Changes (upgrades or downgrades) the plan of the account
 	 *
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 * $accountplanid - New account plan id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param int $accountplanid
 	 * @return apiResponse object
 	 */
-	public function changeAccountPlan($accountid, $accountplanid) {
-		return $this->ApiRequest('/accounts/'.$accountid.'/changeaccountplan/'.$accountplanid, 'POST', new stdClass());
+	public function changeAccountPlan($accountID, $accountplanid) {
+		return $this->ApiRequest('/accounts/'.$accountID.'/changeaccountplan/'.$accountplanid, 'POST', new stdClass());
 	}
 	
 	
@@ -485,15 +485,15 @@ class ApiV2 {
 	 * Moves a Basic account (sub-account) to another Premium account (multi-user account). The destination Premium account must exist in our platform.
 	 *
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 * $destinationaccountid - Destination Premium account id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @param string $destinationaccountid
 	 * @return apiResponse object
 	 */
-	public function moveBasicAccount($accountid, $destinationaccountid) {
-		return $this->ApiRequest('/accounts/'.$accountid.'/movebasicaccount/'.$destinationaccountid, 'POST', new stdClass());
+	public function moveBasicAccount($accountID, $destinationaccountid) {
+		return $this->ApiRequest('/accounts/'.$accountID.'/movebasicaccount/'.$destinationaccountid, 'POST', new stdClass());
 	}
 	
 	/**
@@ -502,13 +502,13 @@ class ApiV2 {
 	 * Deletes the Basic account
 	 *
 	 * Required parameters:
-	 * $accountid - Account id
+	 * $accountID - Account id
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function deleteBasicAccount($accountid) {
-		return $this->ApiRequest('/accounts/'.$accountid.'/deletebasicaccount/', 'DELETE', new stdClass());
+	public function deleteBasicAccount($accountID) {
+		return $this->ApiRequest('/accounts/'.$accountID.'/deletebasicaccount/', 'DELETE', new stdClass());
 	}
 	
 	/* 
@@ -604,13 +604,13 @@ class ApiV2 {
 	 * Returns a list of API page templates
 	 * 
 	 * Optional parameters:
-	 * $accountid - Id of a Premium account. Include this parameter if you have the ability to create Premium (multi-user) accounts, otherwise leave blank.
+	 * $accountID - Id of a Premium account. Include this parameter if you have the ability to create Premium (multi-user) accounts, otherwise leave blank.
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getPageTemplates($accountid='') {
-		$res = $this->ApiRequest('/templates/pagetemplates/?accountid='.$accountid);
+	public function getPageTemplates($accountID='') {
+		$res = $this->ApiRequest('/templates/pagetemplates/?accountid='.$accountID);
 		if ($res->Success) :
 			if (is_array($res->Data)) :
 				for ($i=0;$i<count($res->Data);$i++) :
@@ -670,14 +670,14 @@ class ApiV2 {
 	 * Returns a list of data containers
 	 * 
 	 * Optional arguments: 
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 * 
 	 */
-	public function getContainers($accountid='') {
-		$res = $this->ApiRequest('/templates/containers?accountid='.$accountid);
+	public function getContainers($accountID='') {
+		$res = $this->ApiRequest('/templates/containers?accountid='.$accountID);
 		if ($res->Success) :
 			if (is_array($res->Data)) :
 				for ($i=0;$i<count($res->Data);$i++) :
@@ -763,14 +763,14 @@ class ApiV2 {
 	 * 		$Id     - Location set Id (optional)
 	 * 
 	 * Optional Parameters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
 	 * @param ApiLocationSet $locationset
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function addLocationSet($locationset, $accountid='') {
-		$res = $this->ApiRequest('/templates/locations/AddLocationSet?accountid='.$accountid, 'POST', new ApiLocationSet($locationset));
+	public function addLocationSet($locationset, $accountID='') {
+		$res = $this->ApiRequest('/templates/locations/AddLocationSet?accountid='.$accountID, 'POST', new ApiLocationSet($locationset));
 		if ($res->Success) $res->Data = recast('ApiLocationSet', $res->Data);
 		return $res;
 	}
@@ -781,13 +781,13 @@ class ApiV2 {
 	 * Get location sets
 	 * 
 	 * Optional parameters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getLocationSets($accountid='') {
-		$res = $this->ApiRequest('/templates/locations/GetLocationSets?accountid='.$accountid);
+	public function getLocationSets($accountID='') {
+		$res = $this->ApiRequest('/templates/locations/GetLocationSets?accountid='.$accountID);
 		if ($res->Success) :
 			if (is_array($res->Data)) :
 				for ($i=0;$i<count($res->Data);$i++) :
@@ -807,15 +807,15 @@ class ApiV2 {
 	 * $locationSetId  - Location set id
 	 * 
 	 * Optional Parameters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
 	 * @param int $locationSetId
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 * 
 	 */
-	public function deleteLocationSet($locationSetId, $accountid='') {
-		return $this->ApiRequest('templates/locations/DeleteLocationSet?locationSetId='.$locationSetId.'&accountid='.$accountid, 'POST', new stdClass());
+	public function deleteLocationSet($locationSetId, $accountID='') {
+		return $this->ApiRequest('templates/locations/DeleteLocationSet?locationSetId='.$locationSetId.'&accountid='.$accountID, 'POST', new stdClass());
 	}
 	
 	 /**
@@ -827,14 +827,14 @@ class ApiV2 {
 	 * $locationset - Location set object
 	 * 
 	 * Optional Parameters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
 	 * @param ApiLocationSet $locationset
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function updateLocationSet($locationset, $accountid='') {
-		$res = $this->ApiRequest('/templates/locations/UpdateLocationSet?accountid='.$accountid, 'POST', new ApiLocationSet($locationset));
+	public function updateLocationSet($locationset, $accountID='') {
+		$res = $this->ApiRequest('/templates/locations/UpdateLocationSet?accountid='.$accountID, 'POST', new ApiLocationSet($locationset));
 		if ($res->Success) $res->Data = recast('ApiLocationSet', $res->Data);
 		return $res;
 	}
@@ -849,15 +849,15 @@ class ApiV2 {
 	 * $locationsetitem - ApiLocationSetItem object
 	 * 
 	 * Optional Paramters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
 	 * @param int $locationSetId
 	 * @param ApiLocationSetItem $locationsetitem
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function addLocationItem($locationsetitem, $locationSetId, $accountid='') {
-		$res = $this->ApiRequest('/templates/locations/AddLocationItem?locationSetId='.$locationSetId.'&accountid='.$accountid, 'POST', new ApiLocationSetItem($locationsetitem));
+	public function addLocationItem($locationsetitem, $locationSetId, $accountID='') {
+		$res = $this->ApiRequest('/templates/locations/AddLocationItem?locationSetId='.$locationSetId.'&accountid='.$accountID, 'POST', new ApiLocationSetItem($locationsetitem));
 		if ($res->Success) $res->Data = recast('ApiLocationSetItem', $res->Data);
 		return $res;
 	}
@@ -871,14 +871,14 @@ class ApiV2 {
 	 * $itemId - Location item id
 	 * 
 	 * Optional parameters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
 	 * @param int $itemId
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function getLocationItem($itemId, $accountid) {
-		$res = $this->ApiRequest('/templates/locations/GetLocationItem?itemId='.$itemId.'&accountid='.$accountid);
+	public function getLocationItem($itemId, $accountID) {
+		$res = $this->ApiRequest('/templates/locations/GetLocationItem?itemId='.$itemId.'&accountid='.$accountID);
 		if ($res->Success) $res->Data = recast('ApiLocationSetItem', $res->Data);
 		return $res;
 	}
@@ -892,14 +892,14 @@ class ApiV2 {
 	 * $locationsetitem - Location set Item object
 	 *
 	 * Optional Parameters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 *
 	 * @param ApiLocationSetItem $locationsetitem
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function updateLocationItem($locationsetitem, $accountid='') {
-		$res = $this->ApiRequest('/templates/locations/UpdateLocationItem?accountid='.$accountid, 'POST', new ApiLocationSetItem($locationsetitem));
+	public function updateLocationItem($locationsetitem, $accountID='') {
+		$res = $this->ApiRequest('/templates/locations/UpdateLocationItem?accountid='.$accountID, 'POST', new ApiLocationSetItem($locationsetitem));
 		if ($res->Success) $res->Data = recast('ApiLocationSetItem', $res->Data);
 		return $res;
 	}
@@ -913,14 +913,14 @@ class ApiV2 {
 	 * $itemId - Location item id
 	 * 
 	 * Optional paramters:
-	 * $accountid - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
+	 * $accountID - Premium account id. Include it if you have the ability to create Premium (multi-user) accounts.
 	 * 
 	 * @param int $itemId
-	 * @param string $accountid
+	 * @param string $accountID
 	 * @return apiResponse object
 	 */
-	public function deleteLocationItem($itemId, $accountid='') {
-		return $this->ApiRequest('/templates/locations/DeleteLocationItem?itemId='.$itemId.'&accountid='.$accountid, 'POST', new stdClass());
+	public function deleteLocationItem($itemId, $accountID='') {
+		return $this->ApiRequest('/templates/locations/DeleteLocationItem?itemId='.$itemId.'&accountid='.$accountID, 'POST', new stdClass());
 	}
 	
 	
